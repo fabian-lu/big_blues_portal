@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - 5173:5173
+
+  database:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    command: mongod --auth
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=my_db
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=root
+
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URI=mongodb://your_user:your_password@database:27017/my_db
+
+
+volumes:
+  frontend:
+  mongo_data:
+    driver: local
+  backend:
