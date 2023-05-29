@@ -94,7 +94,7 @@ const websiteAnalytics = [
           <VRow>
             <VCol cols="12">
               <h5 class="text-h5 text-white mb-1">
-                Schnauze du nutte
+                AMK TJAKR ICH FICKE DICH
               </h5>
               <p class="text-sm mb-0">
                 Total 28.5% Conversion Rate
