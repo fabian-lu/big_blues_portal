@@ -12,7 +12,7 @@ deploy_staging:
   type: deploy
   environment:
     name: staging
-    url: big-blues.com
+    url: https://big-blues.com
   script:
     - ssh fabian@big-blues.com "cd ~/bigBluesPortal/bigbluesportal && git checkout main && git pull origin main && exit"
   only:
