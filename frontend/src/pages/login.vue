@@ -36,6 +36,9 @@ const email = ref('admin@demo.com')
 const password = ref('admin')
 const rememberMe = ref(false)
 
+
+axios.post("/auth/login").then(r => console.log(r))
+
 const login = () => {
   axios.post<LoginResponse>('/auth/login', { email: email.value, password: password.value })
     .then(r => {
@@ -47,7 +50,7 @@ const login = () => {
       localStorage.setItem('userData', JSON.stringify(userData))
       localStorage.setItem('accessToken', JSON.stringify(accessToken))
 
-      // Redirect to `to` query if exist or redirect to index route
+      // Redirect to `to` query if exist or redirect to f route
       router.replace(route.query.to ? String(route.query.to) : '/')
     })
     .catch(e => {
