@@ -18,7 +18,6 @@ deploy_to_vm:
     - apt-get update -qq
     - apt-get install -y openssh-client
   script:
-    - echo "test"
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 400 ssh_key.pem
     - ssh -i ssh_key.pem -o StrictHostKeyChecking=no fabian@big-blues.com "echo 'test'"
