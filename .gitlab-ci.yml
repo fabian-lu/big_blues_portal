@@ -1,0 +1,24 @@
+# .gitlab-ci.yml
+
+# Pipeline configuration for the main branch
+# This pipeline will only run when code is pushed to the main branch
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+
+# Define your job stages and steps here
+stages:
+  - deploy
+
+deploy_to_vm:
+  stage: deploy
+  image: ubuntu:latest
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y openssh-client
+  script:
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 400 ssh_key.pem
+    - ssh -i ssh_key.pem -o StrictHostKeyChecking=no fabian@big-blues.com "echo 'test'"
+
