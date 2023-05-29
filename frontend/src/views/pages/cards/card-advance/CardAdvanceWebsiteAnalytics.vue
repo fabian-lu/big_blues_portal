@@ -93,7 +93,7 @@ const websiteAnalytics = [
           <VRow>
             <VCol cols="12">
               <h5 class="text-h5 text-white mb-1">
-                Website Analytics
+                Website lol
               </h5>
               <p class="text-sm mb-0">
                 Total 28.5% Conversion Rate
