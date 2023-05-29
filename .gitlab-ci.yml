@@ -1,26 +1,19 @@
-# .gitlab-ci.yml
-
-# Pipeline configuration for the main branch
-# This pipeline will only run when code is pushed to the main branch
-workflow:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
-
-# Define your job stages and steps here
-stages:
-  - deploy
-
-deploy_to_vm:
-  stage: deploy
-  image: ubuntu:latest
-  before_script:
-    - apt-get update -qq
-    - apt-get install -y openssh-client
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    
+deploy_staging:
+  type: deploy
+  environment:
+    name: staging
+    url: big-blues.com
   script:
-    - echo "$SSH_PRIVATE_KEY"
-    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 400 ssh_key.pem
-    - cat ssh_key.pem
-    - ssh -i ssh_key.pem -o StrictHostKeyChecking=no fabian@big-blues.com "echo 'test'"
-
+    - ssh fabian@big-blues.com "cd ~/bigBluesPortal/bigbluesportal && git checkout main && git pull origin main && exit"
+  only:
+    - main
