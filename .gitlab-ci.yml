@@ -16,6 +16,13 @@ deploy_staging:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - ssh fabian@big-blues.com "cd ~/bigBluesPortal/bigbluesportal && git checkout main && git pull origin main && exit"
+    - ssh fabian@big-blues.com "
+            cd ~/bigBluesPortal/bigbluesportal 
+            && ./stop_application.sh
+            && git checkout main 
+            && git pull origin main 
+            && ./run_application.sh
+            && exit
+        "
   only:
     - main
