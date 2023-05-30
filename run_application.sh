@@ -12,6 +12,7 @@ if [[ "$DEVELOPMENT" == "true" ]]; then
   cd "$current_dir"
   docker-compose -f docker-compose.dev.yml up --build 
 else
+  echo "test"
   yarn build
   cd "$current_dir"
   docker-compose -f docker-compose.prod.yml up --build -d
