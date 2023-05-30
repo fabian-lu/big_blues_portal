@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Read the value of DEVELOPMENT from .env file
 DEVELOPMENT=$(grep -E '^DEVELOPMENT=' .env | cut -d '=' -f2)
