@@ -5,7 +5,7 @@ DEVELOPMENT=$(grep -E '^DEVELOPMENT=' .env | cut -d '=' -f2)
 current_dir=$(pwd)
 
 cd ./frontend
-yarn
+yarn install --ignore-engines
 
 # Check the value and execute the appropriate docker-compose command
 if [[ "$DEVELOPMENT" == "true" ]]; then
