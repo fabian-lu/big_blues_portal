@@ -29,7 +29,7 @@ The project uses a purchased Vue.js admin template ([Vuexy](https://themeforest.
 ### Infrastructure
 - **Docker & Docker Compose** - Containerization
 - **Nginx** - Reverse proxy and static file serving
-- **GitLab CI/CD** - Automated deployment pipeline
+- **GitLab CI/CD** - Automated deployment pipeline (migrated to GitHub now)
 
 ## Project Structure
 
